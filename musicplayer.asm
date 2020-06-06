@@ -14,7 +14,7 @@ Fis equ 25934 ;1193000/46
 Gis equ 22942 ;1193000/52
 Ais equ 20568 ;1193000/58
 ;dlugosci dzwiekow
-Cal equ 16
+Cal 	equ 16
 Pol	equ 8
 Cw	equ 4
 Os	equ 2

@@ -3,7 +3,7 @@
 				RST 3  
 				RST 5  
 				LXI H,ETYK2  
-POW 	 		RST 3  
+POW 	 			RST 3  
 				RST 2  
 				CPI 2BH ;sprawdzenie czy +  
 				JZ DOD  
@@ -14,7 +14,7 @@ POW 	 		RST 3
 				STC  
 				CMC  
 				JMP POW  
-DOD 	 		LXI H,ETYK4 ;dodawanie  
+DOD 	 			LXI H,ETYK4 ;dodawanie  
 				RST 3  
 				MOV H,D  
 				MOV L,E  
@@ -32,7 +32,7 @@ DOD 	 		LXI H,ETYK4 ;dodawanie
 				MOV A,L  
 				RST 4  
 				HLT  
-ODEJM 	 		LXI H,ETYK4 ;odejmowanie  
+ODEJM 	 			LXI H,ETYK4 ;odejmowanie  
 				RST 3  
 				MOV H,D  
 				MOV L,E  
@@ -47,39 +47,39 @@ ODEJM 	 		LXI H,ETYK4 ;odejmowanie
 				MOV A,L  
 				CMP E  
 				JC WAR2  
-				MOV A,H ;wykonaj jeúli SB1 i MB1 > od SB2 i MB2  
+				MOV A,H ;wykonaj je≈õli SB1 i MB1 > od SB2 i MB2  
 				SUB D  
 				RST 4  
 				MOV A,L  
 				SUB E  
 				RST 4  
 				HLT
-WAR1 	 		STC  
+WAR1 	 			STC  
 				CMC  
 				MOV A,L  
 				CMP E
-				JZ WAR3 ;skok jeúli SB1 < SB2 i MB1 = MB2  
+				JZ WAR3 ;skok je≈õli SB1 < SB2 i MB1 = MB2  
 				JC WAR3  
-				MVI A,'-' ;wykonaj jeúli SB1 < SB2 i MB1 > MB2  
+				MVI A,'-' ;wykonaj je≈õli SB1 < SB2 i MB1 > MB2  
 				RST 1  
 				MOV A,D  
 				SUB H  
-				DCR A ; -1 bo poøyczka  
+				DCR A ; -1 bo po≈ºyczka  
 				RST 4  
 				MOV A,E  
 				SUB L  
 				RST 4  
 				HLT  
-WAR2 	 		MOV A,H ;wykonaj jeúli SB1 > SB2 i MB1 < MB2  
+WAR2 	 			MOV A,H ;wykonaj je≈õli SB1 > SB2 i MB1 < MB2  
 				SUB D
-				JZ WAR3 ;skok jeúli SB1 = SB2 i MB1 < MB2  
-				DCR A ; -1 bo poøyczka  
+				JZ WAR3 ;skok je≈õli SB1 = SB2 i MB1 < MB2  
+				DCR A ; -1 bo po≈ºyczka  
 				RST 4  
 				MOV A,L  
 				SUB E  
 				RST 4  
 				HLT  
-WAR3 	 		MVI A,'-' ;wykonaj jeúli SB1 < SB2 i MB1 < MB2  
+WAR3 	 			MVI A,'-' ;wykonaj je≈õli SB1 < SB2 i MB1 < MB2  
 				RST 1  
 				MOV A,D  
 				SUB H  
@@ -88,7 +88,7 @@ WAR3 	 		MVI A,'-' ;wykonaj jeúli SB1 < SB2 i MB1 < MB2
 				SUB L  
 				RST 4  
 				HLT  
-NEG 	 		LXI H,ETYK3 ;negacja  
+NEG 	 			LXI H,ETYK3 ;negacja  
 				RST 3  
 				MOV A,D  
 				CMA  
@@ -97,7 +97,7 @@ NEG 	 		LXI H,ETYK3 ;negacja
 				CMA  
 				RST 4  
 				HLT  
-ETYK1 	 		DB 'Podaj wartosc 1 operandu > ','@'             
-ETYK2 	 		DB 10,13,'Podaj operator dzialania > ','@'       
-ETYK3 	 		DB 10,13,'@'                                                    
-ETYK4 	 		DB 10,13,'Podaj wartosc 2 operandu > ','@' 
+ETYK1 	 			DB 'Podaj wartosc 1 operandu > ','@'             
+ETYK2 	 			DB 10,13,'Podaj operator dzialania > ','@'       
+ETYK3 	 			DB 10,13,'@'                                                    
+ETYK4 	 			DB 10,13,'Podaj wartosc 2 operandu > ','@' 

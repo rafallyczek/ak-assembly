@@ -176,7 +176,7 @@ bin				db		'0000000000000000$'
 dane            		ends
 
 stosik          		segment
-                		dw    	100h dup(0)
+                		dw    		100h dup(0)
 szczyt          		Label word
 stosik          		ends
 

@@ -18,8 +18,8 @@ Cal equ 16
 Pol	equ 8
 Cw	equ 4
 Os	equ 2
-Sz	equ	1
-Pz equ 1
+Sz	equ 1
+Pz 	equ 1
 Progr           segment
                 assume  cs:Progr, ds:dane, ss:stosik
 
@@ -48,43 +48,43 @@ start:          mov     ax,dane
 				;kopiowanie argumentu
 				mov		si,0
 				mov		bx,offset plik
-petla1:			mov		al,es:[82h]+si
+petla1:				mov		al,es:[82h]+si
 				mov		ds:[bx]+si,al
 				inc		si
-				loop	petla1
+				loop		petla1
 				jmp		dalej1
 				
 				;wczytanie sciezki z klawiatury
-sciezka:		mov		ah,09h
+sciezka:			mov		ah,09h
 				mov		dx,offset podajPlik
 				int		21h
 
 				mov		ah,0ah
 				mov		dx,offset max
-				int 	21h
+				int 		21h
 				
 				;usluga otwierania plikow wymaga 0 na koncu sciezki
 				mov		bh,0             
 				mov		bl,len           
-				mov 	plik[bx],0
+				mov 		plik[bx],0
 				
 ;------------------------------------------------------------------------------------------------				
 				;obsluga plikow
 				
 				;otwieramy plik
-dalej1:			mov		al,0 ; 0 - tryb do odczytu
+dalej1:				mov		al,0 ; 0 - tryb do odczytu
 				mov		ah,3dh
 				mov		dx,offset plik
 				int		21h
 				jc		blad1 ; CY=1 jesli nie udalo sie pobrac uchwytu
 				jmp		s1
 
-blad1:			jmp		blad2
+blad1:				jmp		blad2
 				
 s1:				mov		bx,ax
 				mov		dx,offset melodia
 				
-petla2:			mov 	cx,03h ; ile bajtow pobrac
+petla2:				mov 		cx,03h ; ile bajtow pobrac
 				mov		ah,3fh
 				int		21h
 				jc		blad1 ; CY=1 jesli nie udalo sie pobrac danych
@@ -95,7 +95,7 @@ petla2:			mov 	cx,03h ; ile bajtow pobrac
 				jmp		petla2
 
 				;zamykamy plik
-dalej2:			mov		ah,3eh
+dalej2:				mov		ah,3eh
 				int		21h
 				
 ;------------------------------------------------------------------------------------------------	
@@ -103,7 +103,7 @@ dalej2:			mov		ah,3eh
 			
 				cld
 				mov		si,offset melodia
-petla4:			lodsb
+petla4:				lodsb
 				xor		bx,bx
 				
 				;sprawdzamy czy koniec
@@ -111,7 +111,7 @@ petla4:			lodsb
 				jz		koniec2
 				jmp		s2
 				
-koniec2:		jmp		koniec				
+koniec2:			jmp		koniec				
 				
 				;sprawdzamy tony
 s2:				cmp		al,'C'
@@ -146,45 +146,45 @@ s2:				cmp		al,'C'
 				jz		dzwiekAis
 				
 				;ladowanie dzwieku
-dzwiekC:		mov		bx,DzC
+dzwiekC:			mov		bx,DzC
 				jmp		oktawa
-dzwiekD:		mov		bx,DzD
+dzwiekD:			mov		bx,DzD
 				jmp		oktawa
-dzwiekE:		mov		bx,DzE
+dzwiekE:			mov		bx,DzE
 				jmp		oktawa
-dzwiekF:		mov		bx,DzF
+dzwiekF:			mov		bx,DzF
 				jmp		oktawa
-dzwiekG: 		mov		bx,DzG
+dzwiekG: 			mov		bx,DzG
 				jmp		oktawa
-dzwiekA:		mov		bx,DzA
+dzwiekA:			mov		bx,DzA
 				jmp		oktawa
-dzwiekH:		mov		bx,DzH
+dzwiekH:			mov		bx,DzH
 				jmp		oktawa
-dzwiekCis:		mov		bx,Cis
+dzwiekCis:			mov		bx,Cis
 				jmp		oktawa
-dzwiekDis:		mov		bx,Dis
+dzwiekDis:			mov		bx,Dis
 				jmp		oktawa
-dzwiekEis:		mov		bx,Eis
+dzwiekEis:			mov		bx,Eis
 				jmp		oktawa
-dzwiekFis:		mov		bx,Fis
+dzwiekFis:			mov		bx,Fis
 				jmp		oktawa
-dzwiekGis:		mov		bx,Gis
+dzwiekGis:			mov		bx,Gis
 				jmp		oktawa
-dzwiekAis:		mov		bx,Ais
+dzwiekAis:			mov		bx,Ais
 				jmp		oktawa
-pauza:			mov		bx,Pz
+pauza:				mov		bx,Pz
 				inc		si
 				jmp		dlugosc
 				
 				;sprawdzamy oktawy
-oktawa:			lodsb
+oktawa:				lodsb
 				mov		cl,al ; zapamietanie oktawy
 				sub		cl,'0' ; odejmujemy '0' by otrzymac wartosc liczbowa
 				dec		cl
 				shr		bx,cl ; modyfikujemy podzielnik
 				
 				;sprawdzamy dlugosc
-dlugosc:		lodsb
+dlugosc:			lodsb
 				cmp		al,'N'
 				jz		calN
 				cmp		al,'P'
@@ -197,18 +197,18 @@ dlugosc:		lodsb
 				jz		szesn
 								
 				;ladowanie dlugosci dzwieku
-calN:			mov		cl,Cal
+calN:				mov		cl,Cal
 				jmp		odtworz
-polN:			mov		cl,Pol	
+polN:				mov		cl,Pol	
 				jmp		odtworz
-cwN:			mov		cl,Cw
+cwN:				mov		cl,Cw
 				jmp		odtworz
-osemka:			mov		cl,Os
+osemka:				mov		cl,Os
 				jmp		odtworz
-szesn:			mov		cl,Sz				
+szesn:				mov		cl,Sz				
 				
 				;przesyłamy podzielnik
-odtworz:		mov		ax,bx
+odtworz:			mov		ax,bx
 				out		42h,al
 				mov		al,ah
 				out		42h,al
@@ -219,28 +219,28 @@ odtworz:		mov		ax,bx
 				out		61h,al						
 				
 				;czekanie
-petla3:			mov		dx,65535 ; okolo 1/16 sekundy
-				push	cx
+petla3:				mov		dx,65535 ; okolo 1/16 sekundy
+				push		cx
 				xor		cx,cx
 				mov		al,0
 				mov		ah,86h
 				int		15h
 				pop		cx
-				loop	petla3	
+				loop		petla3	
 								
 				;blokowanie glosnika
 				in		al,61h
-				and 	al,11111100b
+				and 		al,11111100b
 				out		61h,al				
 				jmp		petla4
 				
 				;konczenie programu
-koniec:			mov     ah,4ch
-				mov	    al,0
-				int	    21h
+koniec:				mov     	ah,4ch
+				mov	    	al,0
+				int	    	21h
 
 				;komunikat o bledzie pliku
-blad2:			mov		ah,09h
+blad2:				mov		ah,09h
 				mov		dx,offset linia
 				int		21h
 				mov		ah,09h
@@ -248,21 +248,21 @@ blad2:			mov		ah,09h
 				int		21h
 				jmp		koniec
 								
-Progr           ends
+Progr           		ends
 
-dane            segment
+dane            		segment
 max				db		127
 len				db		?
-plik			db		127 dup(0)
-podajPlik		db		'Podaj sciezke do pliku: $'
-tekst			db		'Blad pliku.$'
-linia			db		0ah,0dh,'$'
-melodia			db		1000h dup(0)
-dane            ends
+plik				db		127 dup(0)
+podajPlik			db		'Podaj sciezke do pliku: $'
+tekst				db		'Blad pliku.$'
+linia				db		0ah,0dh,'$'
+melodia				db		1000h dup(0)
+dane            		ends
 
-stosik          segment
-                dw    	100h dup(0)
-szczyt          Label word
-stosik          ends
+stosik          		segment
+                		dw    		100h dup(0)
+szczyt          		Label word
+stosik          		ends
 
 end start
